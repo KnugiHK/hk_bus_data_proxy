@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-
+__version__ = "0.0.3"
 
 HEADERS = {"User-Agent": "proxy"}
 BASE_URL_RT = "https://rt.data.gov.hk/v1/transport"
@@ -14,7 +14,7 @@ BASE_URL_DATA = "https://data.etabus.gov.hk/v1/transport"
 
 @app.route("/")
 def index():
-    return "Works"
+    return f"Works! Running version: {__version__}"
 
 
 @app.route("/v1/transport/kmb/eta/<stop_id>/<route>/<dir>")
