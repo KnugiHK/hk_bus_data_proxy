@@ -8,8 +8,8 @@ CORS(app)
 __version__ = "0.0.3"
 
 HEADERS = {"User-Agent": "proxy"}
-BASE_URL_RT = "https://rt.data.gov.hk/v1/transport"
-BASE_URL_DATA = "https://data.etabus.gov.hk/v1/transport"
+BASE_URL_RT = "https://rt.data.gov.hk"
+BASE_URL_DATA = "https://data.etabus.gov.hk"
 
 
 @app.route("/")
@@ -20,7 +20,7 @@ def index():
 @app.route("/v1/transport/kmb/eta/<stop_id>/<route>/<dir>")
 def eta(stop_id, route, dir):
     r = requests.get(
-        f"{BASE_URL_DATA}/kmb/eta/{stop_id}/{route}/{dir}",
+        BASE_URL_DATA + request.path,
         headers=HEADERS
     )
     return Response(r.text, mimetype='application/json')
@@ -29,16 +29,16 @@ def eta(stop_id, route, dir):
 @app.route("/v1/transport/kmb/stop-eta/<stop_id>")
 def stop_eta(stop_id):
     r = requests.get(
-        f"{BASE_URL_DATA}/kmb/stop-eta/{stop_id}",
+        BASE_URL_DATA + request.path,
         headers=HEADERS
     )
     return Response(r.text, mimetype='application/json')
 
 
-@app.route("/v1/transport/kmb/route-eta/{route}/{service_type}")
+@app.route("/v1/transport/kmb/route-eta/<route>/<service_type>")
 def route_eta(route, service_type):
     r = requests.get(
-        f"{BASE_URL_DATA}/kmb/route-eta/{route}/{service_type}",
+        BASE_URL_RT + request.path,
         headers=HEADERS
     )
     return Response(r.text, mimetype='application/json')
@@ -47,7 +47,7 @@ def route_eta(route, service_type):
 @app.route("/v1/transport/citybus-nwfb/eta/<company_id>/<stop_id>/<route>")
 def citybus_nwfb(company_id, stop_id, route):
     r = requests.get(
-        f"{BASE_URL_RT}/citybus-nwfb/eta/{company_id}/{stop_id}/{route}",
+        BASE_URL_RT + request.path,
         headers=HEADERS
     )
     return Response(r.text, mimetype='application/json')
@@ -56,7 +56,7 @@ def citybus_nwfb(company_id, stop_id, route):
 @app.route("/v1/transport/batch/stop-eta/<company_id>/<stop_id>")
 def batch(company_id, stop_id):
     r = requests.get(
-        f"{BASE_URL_RT}/batch/stop-eta/{company_id}/{stop_id}",
+        BASE_URL_RT + request.path,
         headers=HEADERS
     )
     return Response(r.text, mimetype='application/json')
@@ -76,7 +76,7 @@ def gs():
 @app.route("/v1/transport/mtr/bus/getSchedule", methods=["POST"])
 def mtr_bus():
     r = requests.post(
-        f"{BASE_URL_RT}/mtr/bus/getSchedule",
+        BASE_URL_RT + "/v1/transport/mtr/bus/getSchedule",
         json=request.get_json(True),
         headers=HEADERS
     )
