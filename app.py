@@ -73,5 +73,15 @@ def gs():
     return Response(r.text, mimetype='application/json')
 
 
+@app.route("/v1/transport/mtr/bus/getSchedule", methods=["POST"])
+def mtr_bus():
+    r = requests.post(
+        f"{BASE_URL_RT}/mtr/bus/getSchedule",
+        json=request.get_json(True),
+        headers=HEADERS
+    )
+    return Response(r.text, mimetype='application/json')
+
+
 if __name__ == "__main__":
     app.run(ssl_context='adhoc')
