@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-__version__ = "0.0.3"
+__version__ = "0.0.4"
 
 HEADERS = {"User-Agent": "proxy"}
 BASE_URL_RT = "https://rt.data.gov.hk"
